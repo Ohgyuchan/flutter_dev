@@ -1,3 +1,5 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone_test/model/model_movie.dart';
 import 'package:netflix_clone_test/widget/box_slider.dart';
@@ -9,39 +11,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Movie> movies = [
-    Movie.fromMap({
-      'title': '사랑의 불시착',
-      'keyword': '사랑/로맨스/판타지',
-      'poster': 'movie1.jpg',
-      'like': false
-    }),
-    Movie.fromMap({
-      'title': '사랑의 불시착',
-      'keyword': '사랑/로맨스/판타지',
-      'poster': 'movie1.jpg',
-      'like': false
-    }),
-    Movie.fromMap({
-      'title': '사랑의 불시착',
-      'keyword': '사랑/로맨스/판타지',
-      'poster': 'movie1.jpg',
-      'like': false
-    }),
-    Movie.fromMap({
-      'title': '사랑의 불시착',
-      'keyword': '사랑/로맨스/판타지',
-      'poster': 'movie1.jpg',
-      'like': false
-    }),
-  ];
+  Firestore firestore = Firestore.instance;
+  Stream<QuerySnapshot> streamData;
+
   @override
   void initState() {
     super.initState();
+    streamData = firestore.collection('movie').snapshots();
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _fetchData(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('movie').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return LinearProgressIndicator();
+        return _buildBody(context, snapshot.data.documents);
+      },
+    );
+  }
+
+  Widget _buildBody(BuildContext context, List<DocumentSnapshot> snapshot) {
+    List<Movie> movies = snapshot.map((d) => Movie.fromSnapshot(d)).toList();
     return ListView(
       children: <Widget>[
         Stack(
@@ -55,6 +45,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return _fetchData(context);
+  }
 }
 
 class TopBar extends StatelessWidget {
@@ -66,7 +61,7 @@ class TopBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Image.asset(
-            'images/netflix_logo.png',
+            'images/bbongflix_logo.png',
             fit: BoxFit.contain,
             height: 25,
           ),
@@ -87,7 +82,7 @@ class TopBar extends StatelessWidget {
           Container(
             padding: EdgeInsets.only(right: 1),
             child: Text(
-              '내가 찜한 컨텐츠',
+              '내가 찜한 콘텐츠',
               style: TextStyle(fontSize: 14),
             ),
           ),
