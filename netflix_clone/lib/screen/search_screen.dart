@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/model/model_movie.dart';
-
 import 'detail_screen.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -34,7 +33,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
     List<DocumentSnapshot> searchResults = [];
     for (DocumentSnapshot d in snapshot) {
-      if (d.data.toString().contains(_searchText)) {
+      if (d.data().toString().contains(_searchText)) {
         searchResults.add(d);
       }
     }
