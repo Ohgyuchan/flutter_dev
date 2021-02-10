@@ -13,13 +13,13 @@ class MoreScreen extends StatelessWidget {
               padding: EdgeInsets.only(top: 50),
               child: CircleAvatar(
                 radius: 100,
-                backgroundImage: AssetImage('images/bbongflix_logo.png'),
+                backgroundImage: AssetImage('images/logo.png'),
               ),
             ),
             Container(
               padding: EdgeInsets.only(top: 15),
               child: Text(
-                'TaeBbong',
+                '오규찬',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
@@ -40,7 +40,7 @@ class MoreScreen extends StatelessWidget {
                     await launch(link.url);
                   }
                 },
-                text: "https://github.com/TaeBbong",
+                text: "https://github.com/Ohgyuchan",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 linkStyle: TextStyle(color: Colors.white),
               ),
