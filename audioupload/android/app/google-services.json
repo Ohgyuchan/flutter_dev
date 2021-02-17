@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "534217881237",
+    "project_id": "audioupload-a8a7a",
+    "storage_bucket": "audioupload-a8a7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534217881237:android:fc593d0c531b235ff38d9c",
+        "android_client_info": {
+          "package_name": "com.markmakers.audioupload"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534217881237-dt19mur7cj5q22a2i58es03u3ngmcdas.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.markmakers.audioupload",
+            "certificate_hash": "74d3fb50874458979a2687961d63bf36fc9bc89a"
+          }
+        },
+        {
+          "client_id": "534217881237-80vigijgs8i8o22i2ra7sr79vlr342nr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWFusmAHt5wurPqiChrtvnilVr8rQjCJk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534217881237-80vigijgs8i8o22i2ra7sr79vlr342nr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
