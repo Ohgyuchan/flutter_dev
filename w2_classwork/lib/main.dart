@@ -9,9 +9,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Startup Name Generator',
+      title: '21700443 Oh Gyuchan',
       theme: ThemeData(
-        // Add the 3 lines from here...
         primaryColor: Colors.blue.shade100,
       ),
       home: RandomWords(),
@@ -25,14 +24,14 @@ class RandomWords extends StatefulWidget {
 }
 
 class _RandomWordsState extends State<RandomWords> {
-  final List<WordPair> _suggestions = <WordPair>[]; // NEW
-  final _saved = <WordPair>{}; // NEW
-  final TextStyle _biggerFont = const TextStyle(fontSize: 18); // NEW
+  final List<WordPair> _suggestions = <WordPair>[];
+  final _saved = <WordPair>{};
+  final TextStyle _biggerFont = const TextStyle(fontSize: 18);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Startup Name Generator'),
+        title: Text('21700443 Oh Gyuchan'),
         actions: [
           IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
         ],
@@ -57,19 +56,17 @@ class _RandomWordsState extends State<RandomWords> {
   }
 
   Widget _buildRow(WordPair pair) {
-    final alreadySaved = _saved.contains(pair); // NEW
+    final alreadySaved = _saved.contains(pair);
     return ListTile(
       title: Text(
         pair.asPascalCase,
         style: _biggerFont,
       ),
       leading: Icon(
-        // NEW from here...
         alreadySaved ? Icons.star : Icons.star_border,
         color: alreadySaved ? Colors.yellow : null,
-      ), // ... to here.
+      ),
       onTap: () {
-        // NEW lines from here...
         setState(() {
           if (alreadySaved) {
             _saved.remove(pair);
@@ -77,17 +74,16 @@ class _RandomWordsState extends State<RandomWords> {
             _saved.add(pair);
           }
         });
-      }, // ... to here.
+      },
     );
   }
 
   void _pushSaved() {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
-        // NEW lines from here...
         builder: (BuildContext context) {
           final tiles = _saved.map(
-            (WordPair pair) {
+                (WordPair pair) {
               return ListTile(
                 title: Text(
                   pair.asPascalCase,
@@ -107,7 +103,7 @@ class _RandomWordsState extends State<RandomWords> {
             ),
             body: ListView(children: divided),
           );
-        }, // ...to here.
+        },
       ),
     );
   }
