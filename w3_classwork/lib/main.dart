@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
                   child: Text(
                     'Long time no see!',
                     style: TextStyle(
-                    color: Colors.black,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -102,8 +102,8 @@ class MyApp extends StatelessWidget {
             buttonSection,
             Divider(height:1.0, color: Colors.black),
             textSection,
-        ],
-      ),
+          ],
+        ),
       ),
     );
   }
