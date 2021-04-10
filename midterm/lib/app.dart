@@ -16,6 +16,12 @@ class ShrineApp extends StatelessWidget {
       // TODO: Change backLayer field value to CategoryMenuPage (104)
       initialRoute: '/login',
       onGenerateRoute: _getRoute,
+      routes: {
+        // When navigating to the "/" route, build the FirstScreen widget.
+        '/login': (context) => LoginPage(),
+        // When navigating to the "/second" route, build the SecondScreen widget.
+        '/home': (context) => HomePage(),
+      },
       // TODO: Add a theme (103)
     );
   }
@@ -32,6 +38,3 @@ class ShrineApp extends StatelessWidget {
     );
   }
 }
-
-// TODO: Build a Shrine Theme (103)
-// TODO: Build a Shrine Text Theme (103)

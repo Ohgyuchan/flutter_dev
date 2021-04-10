@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
               // TODO: Add a beveled rectangular border to CANCEL (103)
               children: <Widget>[
                 // TODO: Add buttons (101)
-                FlatButton(
+                TextButton(
                   child: Text('CANCEL', style: TextStyle(color: Colors.black),),
                   onPressed: () {
                     // TODO: Clear the text fields (101)
@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                     _passwordController.clear();
                   },
                 ),
-                FlatButton(
+                TextButton(
                   child: Text('Sign Up', style: TextStyle(color: Colors.black),),
                   onPressed: () {
                     // TODO: Clear the text fields (101)
@@ -68,19 +68,15 @@ class _LoginPageState extends State<LoginPage> {
                 // TODO: Add a beveled rectangular border to NEXT (103)
                 SizedBox(
                   width: 100.0,
-                  child: RaisedButton(
+                  child: ElevatedButton(
                       child: Text('NEXT'),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/home');
                       }
                   ),
                 ),
               ],
             ),
-            // TODO: Wrap Username with AccentColorOverride (103)
-            // TODO: Remove filled: true values (103)
-            // TODO: Wrap Password with AccentColorOverride (103)
-            // TODO: Add button bar (101)
           ],
         ),
       ),
@@ -169,7 +165,7 @@ class SignupPage extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: 100.0,
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       child: Text('SIGN UP'),
                       onPressed: () {
                         var _valid1 = _username.currentState.validate();
