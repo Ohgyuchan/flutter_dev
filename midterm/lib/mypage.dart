@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:rive/rive.dart';
+import 'package:flare_flutter/flare_actor.dart';
 
 class MyPage extends StatefulWidget {
   @override
@@ -10,6 +13,7 @@ class _MyPageState extends State<MyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('My Page'),),
+      body: FlareActor("assets/knight063.riv"),
     );
   }
 }

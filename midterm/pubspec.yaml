@@ -12,6 +12,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   shrine_images: ^2.0.1
   url_launcher: ^6.0.3
+  rive: ^0.7.1
+  flare_flutter: any
 
 dev_dependencies:
   flutter_test:
@@ -21,8 +23,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/diamond.png
-    - assets/diamond2.png
-    - assets/diamond3.png
+    - assets/knight063.riv
     - assets/hotel_images/1-0.png
     - assets/hotel_images/2-0.png
     - assets/hotel_images/3-0.png
