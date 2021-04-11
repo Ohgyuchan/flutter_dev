@@ -47,33 +47,37 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 // TODO: Add buttons (101)
                 TextButton(
-                  child: Text('CANCEL', style: TextStyle(color: Colors.black),),
+                  child: Text(
+                    'CANCEL',
+                    style: TextStyle(color: Colors.black),
+                  ),
                   onPressed: () {
-                    // TODO: Clear the text fields (101)
                     _usernameController.clear();
                     _passwordController.clear();
                   },
                 ),
                 TextButton(
-                  child: Text('Sign Up', style: TextStyle(color: Colors.black),),
+                  child: Text(
+                    'Sign Up',
+                    style: TextStyle(color: Colors.black),
+                  ),
                   onPressed: () {
-                    // TODO: Clear the text fields (101)
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => SignupPage()),
                     );
                   },
                 ),
-                // TODO: Add an elevation to NEXT (103)
-                // TODO: Add a beveled rectangular border to NEXT (103)
                 SizedBox(
                   width: 100.0,
                   child: ElevatedButton(
-                      child: Text('NEXT'),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.grey,
+                      ),
+                      child: Text('NEXT', style: TextStyle(color: Colors.black)),
                       onPressed: () {
                         Navigator.pushNamed(context, '/home');
-                      }
-                  ),
+                      }),
                 ),
               ],
             ),
@@ -83,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
 class SignupPage extends StatelessWidget {
   final _username = GlobalKey<FormState>();
   final _password = GlobalKey<FormState>();
@@ -93,8 +98,8 @@ class SignupPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 24.0),
-            children: <Widget>[
+          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          children: <Widget>[
             SizedBox(height: 80.0),
             Form(
               key: _username,
@@ -128,61 +133,62 @@ class SignupPage extends StatelessWidget {
                 obscureText: true,
               ),
             ),
-              SizedBox(height: 12.0),
-              Form(
-                key: _confirm,
-                child: TextFormField(
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter Confirm Password';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    filled: true,
-                    labelText: 'Confirm Password',
-                  ),
-                  obscureText: true,
+            SizedBox(height: 12.0),
+            Form(
+              key: _confirm,
+              child: TextFormField(
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter Confirm Password';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  filled: true,
+                  labelText: 'Confirm Password',
+                ),
+                obscureText: true,
+              ),
+            ),
+            SizedBox(height: 12.0),
+            Form(
+              key: _email,
+              child: TextFormField(
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter Email Address';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  filled: true,
+                  labelText: 'Email Address',
                 ),
               ),
-              SizedBox(height: 12.0),
-              Form(
-                key: _email,
-                child: TextFormField(
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter Email Address';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    filled: true,
-                    labelText: 'Email Address',
-                  ),
-                ),
-              ),
-              ButtonBar(
-                children: [
-                  SizedBox(
-                    width: 100.0,
-                    child: ElevatedButton(
-                      child: Text('SIGN UP'),
+            ),
+            ButtonBar(
+              children: [
+                SizedBox(
+                  width: 100.0,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.grey,
+                      ),
+                      child: Text('SIGN UP', style: TextStyle(color: Colors.black)),
                       onPressed: () {
                         var _valid1 = _username.currentState.validate();
                         var _valid2 = _password.currentState.validate();
                         var _valid3 = _confirm.currentState.validate();
                         var _valid4 = _email.currentState.validate();
-                        if(_valid1 && _valid2 && _valid3 && _valid4)
+                        if (_valid1 && _valid2 && _valid3 && _valid4)
                           Navigator.pop(context);
-                      }
-                    ),
-                  ),
-                ],
-              )
+                      }),
+                ),
+              ],
+            )
           ],
         ),
       ),
     );
   }
 }
-

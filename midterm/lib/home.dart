@@ -1,8 +1,9 @@
+import 'package:Shrine/detail.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'model/products_repository.dart';
-import 'model/product.dart';
+import 'model/hotels_repository.dart';
+import 'model/model_hotel.dart';
 
 const _url = 'https://www.handong.edu';
 
@@ -12,20 +13,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _isGridView = <bool>[true, false];
+  final _isGridView = <bool>[false, true];
+  final List<Hotel> products = HotelRepository.loadHotels(Star.all);
 
   List<Card> _buildGridCards(BuildContext context) {
-    List<Product> products = ProductsRepository.loadProducts(Category.all);
-
     if (products == null || products.isEmpty) {
       return const <Card>[];
     }
-
-    final ThemeData theme = Theme.of(context);
     final NumberFormat formatter = NumberFormat.simpleCurrency(
         locale: Localizations.localeOf(context).toString());
 
-    return products.map((product) {
+    return products.asMap().entries.map((product) {
+      int index = product.key;
+      Hotel hotel = product.value;
       return Card(
         clipBehavior: Clip.antiAlias,
         child: Column(
@@ -33,30 +33,69 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             AspectRatio(
               aspectRatio: 18 / 11,
-              child: Image.asset(
-                product.assetName,
-                package: product.assetPackage,
-                fit: BoxFit.fitWidth,
-              ),
+              child: Image.asset(hotel.assetName, fit: BoxFit.fitWidth),
             ),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
+                padding: EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 5.0),
                 child: Column(
-                  // TODO: Align labels to the bottom and center (103)
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  // TODO: Change innermost Column (103)
                   children: <Widget>[
-                    // TODO: Handle overflowing labels (103)
+                    Row(
+                      children: [
+                        for (int i = 0; i < hotel.stars; i++)
+                          Icon(
+                            Icons.star,
+                            color: Colors.yellow,
+                            size: 15.0,
+                          ),
+                      ],
+                    ),
+                    SizedBox(height: 4.0),
                     Text(
-                      product.name,
-                      style: theme.textTheme.headline6,
+                      hotel.name,
+                      style:
+                          TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                       maxLines: 1,
                     ),
+                    SizedBox(height: 4.0),
+                    Row(
+                      children: [
+                        Icon(Icons.location_on, color: Colors.blue, size: 12.0),
+                        Flexible(
+                          child: Container(
+                            child: Text(
+                              hotel.location,
+                              style: TextStyle(
+                                fontSize: 7.0,
+                              ),
+                              overflow: TextOverflow.clip,
+                              maxLines: 1,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     SizedBox(height: 8.0),
-                    Text(
-                      formatter.format(product.price),
-                      style: theme.textTheme.subtitle2,
+                    Container(
+                      alignment: Alignment.bottomRight,
+                      child: InkWell(
+                        onTap: () {
+                          print(index);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DetailPage(
+                                  hotel: hotel,
+                                )),
+                          );
+                        },
+                        child: Text(
+                          'more',
+                          style: TextStyle(
+                              color: Colors.lightBlueAccent, fontSize: 10.0),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -69,48 +108,85 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<Card> _buildListCards(BuildContext context) {
-    List<Product> products = ProductsRepository.loadProducts(Category.all);
-
     if (products == null || products.isEmpty) {
       return const <Card>[];
     }
-
-    final ThemeData theme = Theme.of(context);
     final NumberFormat formatter = NumberFormat.simpleCurrency(
         locale: Localizations.localeOf(context).toString());
 
-    return products.map((product) {
+    return products.asMap().entries.map((product) {
+      int index = product.key;
+      Hotel hotel = product.value;
       return Card(
         clipBehavior: Clip.antiAlias,
-        child: Column(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             AspectRatio(
-              aspectRatio: 18 / 11,
-              child: Image.asset(
-                product.assetName,
-                package: product.assetPackage,
-                fit: BoxFit.fitWidth,
-              ),
+              aspectRatio: 1 / 1,
+              child: Image.asset(hotel.assetName, fit: BoxFit.scaleDown),
             ),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
                 child: Column(
-                  // TODO: Align labels to the bottom and center (103)
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  // TODO: Change innermost Column (103)
                   children: <Widget>[
-                    // TODO: Handle overflowing labels (103)
-                    Text(
-                      product.name,
-                      style: theme.textTheme.headline6,
-                      maxLines: 1,
+                    Row(
+                      children: [
+                        for (int i = 0; i < hotel.stars; i++)
+                          Icon(
+                            Icons.star,
+                            color: Colors.yellow,
+                            size: 15.0,
+                          ),
+                      ],
                     ),
                     SizedBox(height: 8.0),
                     Text(
-                      formatter.format(product.price),
-                      style: theme.textTheme.subtitle2,
+                      hotel.name,
+                      style:
+                          TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                    ),
+                    SizedBox(height: 8.0),
+                    Row(
+                      children: [
+                        Icon(Icons.location_on, color: Colors.blue, size: 15.0),
+                        Flexible(
+                          child: Container(
+                            child: Text(
+                              hotel.location,
+                              style: TextStyle(
+                                fontSize: 7.0,
+                              ),
+                              overflow: TextOverflow.clip,
+                              maxLines: 1,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0),
+                    Container(
+                      alignment: Alignment.bottomRight,
+                      child: InkWell(
+                        onTap: () {
+                          print(index);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DetailPage(
+                                      hotel: hotel,
+                                    )),
+                          );
+                        },
+                        child: Text(
+                          'more',
+                          style: TextStyle(
+                              color: Colors.lightBlueAccent, fontSize: 10.0),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -121,8 +197,10 @@ class _HomePageState extends State<HomePage> {
       );
     }).toList();
   }
+
   @override
   Widget build(BuildContext context) {
+    var orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -183,7 +261,8 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       appBar: AppBar(
-        title: Text('SHRINE'),
+        title: Text('Main'),
+        centerTitle: true,
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -203,13 +282,12 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(8.0),
+      body: Flex(
+        direction: Axis.vertical,
         children: [
           Container(
             alignment: Alignment.topRight,
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.fromLTRB(0.0, 8.0, 16.0, 0.0),
             child: ToggleButtons(
               children: <Widget>[
                 Icon(Icons.list),
@@ -220,16 +298,22 @@ class _HomePageState extends State<HomePage> {
                 setState(() {
                   index == 0 ? _isGridView[1] = false : _isGridView[0] = false;
                   _isGridView[index] = true;
-                }
-                );
+                });
               },
             ),
           ),
-          GridView.count(
-          shrinkWrap: true,
-          crossAxisCount: 2,
-          childAspectRatio: 8.0 / 9.0,
-          children: _buildGridCards(context),
+          Expanded(
+            child: GridView.count(
+              padding: EdgeInsets.all(16.0),
+              shrinkWrap: true,
+              crossAxisCount: _isGridView[0]
+                  ? 1
+                  : (orientation == Orientation.portrait ? 2 : 3),
+              childAspectRatio: _isGridView[0] ? 3.0 / 1.0 : 8.0 / 9.0,
+              children: _isGridView[1] == true
+                  ? _buildGridCards(context)
+                  : _buildListCards(context),
+            ),
           ),
         ],
       ),
