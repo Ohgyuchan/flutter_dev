@@ -103,16 +103,48 @@ class _DetailPageState extends State<DetailPage> {
         child: SafeArea(
           child: ListView(
             children: [
-              Image.asset(
-                widget.hotel.assetName,
-                width: 600,
-                height: 240,
-                fit: BoxFit.cover,
+              GestureDetector(
+                child: Hero(
+                  tag: 'imageHero',
+                  child: Image.asset(
+                    widget.hotel.assetName,
+                    width: 600,
+                    height: 240,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) {
+                    return new HeroPage(widget.hotel.assetName);
+                  }));
+                },
               ),
               titleSection,
               Divider(height: 1.0, color: Colors.black),
               textSection,
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class HeroPage extends StatelessWidget {
+  final String asset_link;
+
+  HeroPage(this. asset_link);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: Center(
+          child: Hero(
+            tag: 'imageHero',
+            child: Image.asset(asset_link),
           ),
         ),
       ),
