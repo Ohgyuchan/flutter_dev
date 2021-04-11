@@ -8,6 +8,10 @@ import 'model/model_hotel.dart';
 const _url = 'https://www.handong.edu';
 
 class HomePage extends StatefulWidget {
+  List<Hotel> saved = List<Hotel>();
+
+  HomePage({this.saved});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -86,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DetailPage(
-                                  hotel: hotel,
+                                  hotel: hotel, saved: widget.saved,
                                 )),
                           );
                         },
@@ -172,12 +176,11 @@ class _HomePageState extends State<HomePage> {
                       alignment: Alignment.bottomRight,
                       child: InkWell(
                         onTap: () {
-                          print(index);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DetailPage(
-                                      hotel: hotel,
+                                      hotel: hotel, saved: widget.saved,
                                     )),
                           );
                         },
@@ -242,7 +245,7 @@ class _HomePageState extends State<HomePage> {
                 Icons.location_city,
                 color: Colors.blue,
               ),
-              title: Text('Favorite Hotel'),
+              title: Text('Favorite Hotels'),
               onTap: () {
                 Navigator.pushNamed(context, '/favorite');
               },

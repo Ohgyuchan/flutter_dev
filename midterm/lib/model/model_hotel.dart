@@ -13,7 +13,6 @@ class Hotel {
   const Hotel({
     @required this.star,
     @required this.stars,
-    @required this.like,
     @required this.id,
     @required this.name,
     @required this.phone,
@@ -21,7 +20,6 @@ class Hotel {
     @required this.desc,
   })  : assert(star != null),
         assert(stars != null),
-        assert(like != null),
         assert(id != null),
         assert(name != null),
         assert(phone != null),
@@ -30,7 +28,6 @@ class Hotel {
 
   final Star star;
   final int stars;
-  final bool like;
   final int id;
   final String name;
   final String phone;

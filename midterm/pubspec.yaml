@@ -7,7 +7,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_slidable:
   intl: ^0.17.0-nullsafety.2
   cupertino_icons: ^1.0.2
   shrine_images: ^2.0.1

@@ -4,16 +4,22 @@ import 'dart:ui';
 
 class DetailPage extends StatefulWidget {
   final Hotel hotel;
+  List<Hotel>saved = List<Hotel>();
 
-  const DetailPage({this.hotel});
+  DetailPage({this.hotel, this.saved});
+
   @override
   _DetailPageState createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
+  bool like = false;
   @override
   void initState() {
     super.initState();
+    for(int i = 0; i < widget.saved.length; i++)
+      if(widget.hotel == widget.saved.elementAt(i))
+        like = true;
   }
 
   @override
@@ -103,21 +109,32 @@ class _DetailPageState extends State<DetailPage> {
         child: SafeArea(
           child: ListView(
             children: [
-              GestureDetector(
-                child: Hero(
-                  tag: 'imageHero',
-                  child: Image.asset(
-                    widget.hotel.assetName,
-                    width: 600,
-                    height: 240,
-                    fit: BoxFit.cover,
+              Stack(
+                children: [
+                  InkWell(
+                    child: Hero(
+                      tag: 'imageHero',
+                      child: Image.asset(
+                        widget.hotel.assetName,
+                        width: 600,
+                        height: 240,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return new HeroPage(widget.hotel.assetName);
+                      }));
+                    },
+                    onDoubleTap: () {
+                      setState(() {
+                        like = !like;
+                        like ? widget.saved.add(widget.hotel) : widget.saved.remove(widget.hotel);
+                      });
+                    },
                   ),
-                ),
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return new HeroPage(widget.hotel.assetName);
-                  }));
-                },
+                  Positioned(right: 0, top: 0, child: Icon(like ? Icons.favorite : Icons.favorite_border, size: 40, color: Colors.red,)),
+                ],
               ),
               titleSection,
               Divider(height: 1.0, color: Colors.black),
@@ -133,7 +150,7 @@ class _DetailPageState extends State<DetailPage> {
 class HeroPage extends StatelessWidget {
   final String asset_link;
 
-  HeroPage(this. asset_link);
+  HeroPage(this.asset_link);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -6,7 +6,6 @@ class HotelRepository {
       Hotel(
         star: Star.three,
         stars: 3,
-        like: false,
         id: 1,
         name: 'Aventree Hotel Busan',
         phone: '054-123-1111',
@@ -16,7 +15,6 @@ class HotelRepository {
       Hotel(
         star: Star.three,
         stars: 3,
-        like: false,
         id: 2,
         name: 'ibis Ambassador Busan City Centre',
         phone: '054-123-1112',
@@ -26,7 +24,6 @@ class HotelRepository {
       Hotel(
         star: Star.four,
         stars: 4,
-        like: false,
         id: 3,
         name: 'Sunset Business Hotel',
         phone: '054-123-1113',
@@ -36,7 +33,6 @@ class HotelRepository {
       Hotel(
         star: Star.three,
         stars: 3,
-        like: false,
         id: 4,
         name: 'Ibis Budget Ambassador Busan Haeundae',
         phone: '054-123-1114',
@@ -46,7 +42,6 @@ class HotelRepository {
       Hotel(
         star: Star.five,
         stars: 5,
-        like: false,
         id: 5,
         name: 'Lotte Hotel Busan',
         phone: '054-123-1115',
@@ -56,7 +51,6 @@ class HotelRepository {
       Hotel(
         star: Star.one,
         stars: 1,
-        like: false,
         id: 6,
         name: 'Park Hyatt Busan',
         phone: '054-123-1116',
@@ -66,7 +60,6 @@ class HotelRepository {
       Hotel(
         star: Star.three,
         stars: 3,
-        like: false,
         id: 7,
         name: 'Paradise Hotel Busan',
         phone: '054-123-1117',
@@ -76,7 +69,6 @@ class HotelRepository {
       Hotel(
         star: Star.three,
         stars: 3,
-        like: false,
         id: 8,
         name: 'Tower Hill Hotel',
         phone: '054-123-1118',
