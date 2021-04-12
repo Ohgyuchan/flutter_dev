@@ -20,7 +20,7 @@ class ShrineApp extends StatelessWidget {
         '/home': (context) => HomePage(saved: saved),
         '/favorite': (context) => FavoritePage(saved: saved),
         '/search': (context) => SearchPage(),
-        '/mypage': (context) => MyPage(),
+        '/mypage': (context) => MyPage(saved: saved),
       },
       // TODO: Add a theme (103)
     );

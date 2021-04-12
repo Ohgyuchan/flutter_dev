@@ -38,7 +38,4 @@ class Hotel {
 
   @override
   String toString() => "$name (id=$id)";
-
-
-  //String toString() => "$location (id=$id)";
 }
