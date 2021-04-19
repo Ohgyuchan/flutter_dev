@@ -15,41 +15,41 @@ class Bottom extends StatelessWidget {
             Tab(
               icon: Icon(
                 Icons.home,
-                size: 18,
+                size: 15,
               ),
               child: Text(
                 '홈',
-                style: TextStyle(fontSize: 9),
+                style: TextStyle(fontSize: 8),
               ),
             ),
             Tab(
               icon: Icon(
                 Icons.search,
-                size: 18,
+                size: 15,
               ),
               child: Text(
                 '검색',
-                style: TextStyle(fontSize: 9),
+                style: TextStyle(fontSize: 8),
               ),
             ),
             Tab(
               icon: Icon(
                 Icons.save_alt,
-                size: 18,
+                size: 15,
               ),
               child: Text(
                 '저장한 콘텐츠 목록',
-                style: TextStyle(fontSize: 9),
+                style: TextStyle(fontSize: 8),
               ),
             ),
             Tab(
               icon: Icon(
                 Icons.list,
-                size: 18,
+                size: 15,
               ),
               child: Text(
                 '더보기',
-                style: TextStyle(fontSize: 9),
+                style: TextStyle(fontSize: 8),
               ),
             ),
           ],
