@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.w9_classwork">
+    package="com.example.gtk_flutter">
    <application
-        android:label="w9_classwork"
+        android:label="gtk_flutter"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
