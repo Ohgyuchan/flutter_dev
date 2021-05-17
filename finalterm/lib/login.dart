@@ -1,17 +1,13 @@
-import 'package:Final/profile.dart';
-import 'package:Final/utils/authentication.dart';
+import 'package:Finalterm/home.dart';
+import 'package:Finalterm/utils/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
-
 class _LoginPageState extends State<LoginPage> {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,50 +22,27 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Row(),
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: Image.asset(
-                        'assets/firebase_logo.png',
-                        height: 160,
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'FlutterFire',
-                      style: TextStyle(
-                        fontSize: 40,
-                      ),
-                    ),
-                    Text(
-                      'Authentication',
-                      style: TextStyle(
-                        fontSize: 40,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              SizedBox(height: 150.0),
+              Image.asset('assets/diamond.png'),
+              SizedBox(height: 16.0),
+              Text('SHRINE'),
+              SizedBox(height: 90.0),
               FutureBuilder(
-                future: _initialization,
+                future: Authentication.initializeFirebase(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    print(snapshot.error);
                     return Text('Error initializing Firebase');
                   } else if (snapshot.connectionState == ConnectionState.done) {
                     return GoogleSignInButton();
                   }
                   return CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.orangeAccent,
+                      Colors.orangeAccent
                     ),
                   );
                 },
               ),
+              AnonymousSignInButton(),
             ],
           ),
         ),
@@ -77,6 +50,76 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+class AnonymousSignInButton extends StatefulWidget {
+  @override
+  _AnonymousSignInButtonState createState() => _AnonymousSignInButtonState();
+}
+
+class _AnonymousSignInButtonState extends State<AnonymousSignInButton> {
+  bool _isSigningIn = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: _isSigningIn
+          ? CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+      )
+          : OutlinedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(Colors.grey),
+        ),
+        onPressed: () async {
+          setState(() {
+            _isSigningIn = true;
+          });
+          UserCredential userCredential = await FirebaseAuth.instance.signInAnonymously();
+          User? user = userCredential.user;
+
+          setState(() {
+            _isSigningIn = false;
+          });
+
+          if (user != null) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => HomePage(
+                  user: user,
+                ),
+              ),
+            );
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image(
+                image: AssetImage("assets/firebase_logo.png"),
+                height: 35.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text(
+                  'Sign in  Anonymous',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class GoogleSignInButton extends StatefulWidget {
   @override
   _GoogleSignInButtonState createState() => _GoogleSignInButtonState();
@@ -95,12 +138,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
       )
           : OutlinedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.white),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(40),
-            ),
-          ),
+          backgroundColor: MaterialStateProperty.all(Colors.redAccent),
         ),
         onPressed: () async {
           setState(() {
@@ -117,7 +155,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
           if (user != null) {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (context) => ProfilePage(
+                builder: (context) => HomePage(
                   user: user,
                 ),
               ),
