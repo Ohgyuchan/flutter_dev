@@ -50,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
 class AnonymousSignInButton extends StatefulWidget {
   @override
   _AnonymousSignInButtonState createState() => _AnonymousSignInButtonState();
