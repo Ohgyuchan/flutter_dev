@@ -4,110 +4,253 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeData _theme() {
+    return ThemeData(
+      appBarTheme: _appBarTheme(),
+      primaryColor: Colors.white,
+      accentColor: Colors.black,
+      backgroundColor: Colors.white,
+      textTheme: TextTheme(
+        headline5: TextStyle(
+          fontSize: 20,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+        headline6: TextStyle(
+          fontSize: 17,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+        subtitle1: TextStyle(
+          fontSize: 15,
+          color: Colors.black.withOpacity(0.4),
+        ),
+        subtitle2: TextStyle(
+          fontSize: 13,
+          color: Colors.black.withOpacity(0.4),
+        ),
+      ),
+    );
+  }
+
+  AppBarTheme _appBarTheme() {
+    return AppBarTheme(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      textTheme: TextTheme(
+        headline5: TextStyle(
+          fontSize: 22,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+        headline6: TextStyle(
+          fontSize: 15,
+          color: Colors.grey,
+          fontWeight: FontWeight.normal,
+        ),
+      ),
+    );
+  }
+
+  ButtonStyle _elevatedButtonForm() {
+    return ElevatedButton.styleFrom(
+      primary: Colors.white,
+      elevation: 0,
+      side: BorderSide(
+        color: Colors.black,
+        width: 2.0,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+      theme: _theme(),
+      home: Scaffold(
+        appBar: _makeAppBar(),
+        body: _makeBody(context),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  Widget _makeBody(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 50.0),
+          Text(
+            '나의 키워드',
+            style: _theme().textTheme.headline5,
+          ),
+          SizedBox(height: 10),
+          Text(
+            '키워드를 추가할 수록 더 정확하게\n루틴을 추천해 드릴 수 있어요.',
+            style: _theme().textTheme.subtitle1,
+          ),
+          SizedBox(height: 10),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Container(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text(
+                            '아침형 인간',
+                            style: _theme().textTheme.headline5,
+                          ),
+                          style: _elevatedButtonForm(),
+                        ),
+                        SizedBox(width: 10.0),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text(
+                            '독서',
+                            style: _theme().textTheme.headline5,
+                          ),
+                          style: _elevatedButtonForm(),
+                        ),
+                        SizedBox(width: 10.0),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text(
+                            '운동',
+                            style: _theme().textTheme.headline5,
+                          ),
+                          style: _elevatedButtonForm(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.add_circle_outline_rounded,
+                  size: 30,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 250,
+            margin: const EdgeInsets.symmetric(vertical: 50.0),
+            child: Column(
+              children: [
+                Container(
+                  height: 30,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '나의 예정 루틴',
+                        style: _theme().textTheme.headline6,
+                      ),
+                      Text(
+                        '더보기 >',
+                        style: _theme().textTheme.subtitle1,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10),
+                Expanded(
+                  child: Container(
+                    child: GridView.builder(
+                        scrollDirection: Axis.horizontal,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1,
+                          childAspectRatio: 5.0 / 4.0,
+                        ),
+                        itemCount: 10,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Card(
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  CircleAvatar(
+                                    minRadius: 45,
+                                    backgroundColor: Colors.grey,
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    '김종국',
+                                    style: _theme().textTheme.headline6,
+                                  ),
+                                  Text(
+                                    '#운동 #0000',
+                                    style: _theme().textTheme.subtitle2,
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    '19시 ~ 21시',
+                                    style: _theme().textTheme.headline6,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+  AppBar _makeAppBar() {
+    return AppBar(
+      title: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            alignment: Alignment.topLeft,
+            child: Text(
+              "7월 12일 월요일",
+              style: _appBarTheme().textTheme!.headline5,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+          ),
+          SizedBox(height: 10),
+          Text(
+            "2일차도 ㅇㅇㅇ과 함께해요",
+            style: _appBarTheme().textTheme!.headline6,
+          )
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.calendar_today_outlined),
+        )
+      ],
     );
   }
 }
