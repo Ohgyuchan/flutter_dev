@@ -142,10 +142,15 @@ class _MyAppState extends State<MyApp> {
                     ),
                   ),
                 ),
-                Icon(
-                  Icons.add_circle_outline_rounded,
-                  color: _theme().buttonColor,
-                  size: 30,
+                IconButton(
+                  onPressed: () {
+                    print('키워드 추가 클릭!');
+                  },
+                  icon: Icon(
+                    Icons.add_circle_outline_rounded,
+                    color: _theme().buttonColor,
+                    size: 30,
+                  ),
                 ),
               ],
             ),
@@ -164,19 +169,24 @@ class _MyAppState extends State<MyApp> {
                         '나의 예정 루틴',
                         style: _theme().textTheme.headline6,
                       ),
-                      Container(
-                        child: Row(
-                          children: [
-                            Text(
-                              '더보기',
-                              style: _theme().textTheme.subtitle1,
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_sharp,
-                              color: _theme().buttonColor,
-                              size: 15,
-                            )
-                          ],
+                      GestureDetector(
+                        onTap: () {
+                          print('더보기 클릭!');
+                        },
+                        child: Container(
+                          child: Row(
+                            children: [
+                              Text(
+                                '더보기',
+                                style: _theme().textTheme.subtitle1,
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                color: _theme().buttonColor,
+                                size: 15,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -260,8 +270,13 @@ class _MyAppState extends State<MyApp> {
       ),
       actions: [
         IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.calendar_today_outlined),
+          onPressed: () {
+            print('캘린더 클릭!');
+          },
+          icon: Icon(
+            Icons.calendar_today_outlined,
+            color: _theme().buttonColor,
+          ),
         )
       ],
     );
