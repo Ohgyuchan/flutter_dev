@@ -113,7 +113,9 @@ class _MyAppState extends State<MyApp> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            print('키워드 버튼 클릭!');
+                          },
                           child: Text(
                             '아침형 인간',
                             style: _theme().textTheme.headline5,
@@ -122,7 +124,9 @@ class _MyAppState extends State<MyApp> {
                         ),
                         SizedBox(width: 10.0),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            print('키워드 버튼 클릭!');
+                          },
                           child: Text(
                             '독서',
                             style: _theme().textTheme.headline5,
@@ -131,7 +135,9 @@ class _MyAppState extends State<MyApp> {
                         ),
                         SizedBox(width: 10.0),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            print('키워드 버튼 클릭!');
+                          },
                           child: Text(
                             '운동',
                             style: _theme().textTheme.headline5,
@@ -204,36 +210,41 @@ class _MyAppState extends State<MyApp> {
                         ),
                         itemCount: 10,
                         itemBuilder: (BuildContext context, int index) {
-                          return Card(
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            color: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  CircleAvatar(
-                                    minRadius: 45,
-                                    backgroundColor: Colors.grey,
-                                  ),
-                                  SizedBox(height: 10),
-                                  Text(
-                                    '김종국',
-                                    style: _theme().textTheme.headline6,
-                                  ),
-                                  Text(
-                                    '#운동 #0000',
-                                    style: _theme().textTheme.subtitle2,
-                                  ),
-                                  SizedBox(height: 10),
-                                  Text(
-                                    '19시 ~ 21시',
-                                    style: _theme().textTheme.headline6,
-                                  ),
-                                ],
+                          return GestureDetector(
+                            onTap: () {
+                              print('카드 클릭!');
+                            },
+                            child: Card(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    CircleAvatar(
+                                      minRadius: 45,
+                                      backgroundColor: Colors.grey,
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(
+                                      '김종국',
+                                      style: _theme().textTheme.headline6,
+                                    ),
+                                    Text(
+                                      '#운동 #0000',
+                                      style: _theme().textTheme.subtitle2,
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(
+                                      '19시 ~ 21시',
+                                      style: _theme().textTheme.headline6,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           );
