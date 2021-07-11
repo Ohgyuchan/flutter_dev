@@ -16,6 +16,7 @@ class _MyAppState extends State<MyApp> {
     return ThemeData(
       appBarTheme: _appBarTheme(),
       primaryColor: Colors.white,
+      buttonColor: Colors.grey,
       accentColor: Colors.black,
       backgroundColor: Colors.white,
       textTheme: TextTheme(
@@ -143,6 +144,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 Icon(
                   Icons.add_circle_outline_rounded,
+                  color: _theme().buttonColor,
                   size: 30,
                 ),
               ],
@@ -162,9 +164,20 @@ class _MyAppState extends State<MyApp> {
                         '나의 예정 루틴',
                         style: _theme().textTheme.headline6,
                       ),
-                      Text(
-                        '더보기 >',
-                        style: _theme().textTheme.subtitle1,
+                      Container(
+                        child: Row(
+                          children: [
+                            Text(
+                              '더보기',
+                              style: _theme().textTheme.subtitle1,
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios_sharp,
+                              color: _theme().buttonColor,
+                              size: 15,
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),
