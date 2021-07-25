@@ -1,4 +1,5 @@
 import 'package:carrot_clone/repositories/contents_repository.dart';
+import 'package:carrot_clone/repositories/firebase_repository.dart';
 import 'package:carrot_clone/screens/detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

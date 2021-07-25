@@ -38,6 +38,7 @@ android {
         applicationId "com.example.carrot_clone"
         minSdkVersion 18
         targetSdkVersion 30
+        multiDexEnabled true // add this, more details: https://paulaner80.tistory.com/entry/Execution-failed-for-task-appmergeDexDebug
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
