@@ -91,11 +91,12 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: Icon(Icons.tune),
         ),
         IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset(
-              'assets/svg/bell.svg',
-              width: 22,
-            )),
+          onPressed: () {},
+          icon: SvgPicture.asset(
+            'assets/svg/bell.svg',
+            width: 22,
+          ),
+        ),
       ],
     );
   }
