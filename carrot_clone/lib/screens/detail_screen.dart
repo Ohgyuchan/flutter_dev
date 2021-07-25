@@ -214,12 +214,12 @@ class _DetailScreenState extends State<DetailScreen>
           onPressed: () {},
           icon: _makeAnimatedIcon(Icons.share_outlined),
         ),
-        _makePopUpMenu(),
+        _makePopUpMenu(context),
       ],
     );
   }
 
-  Widget _makePopUpMenu() {
+  Widget _makePopUpMenu(BuildContext context) {
     return PopupMenuButton(
       icon: _makeAnimatedIcon(Icons.more_vert),
       onSelected: (int value) {
@@ -236,7 +236,7 @@ class _DetailScreenState extends State<DetailScreen>
             ),
           );
         } else {
-          _firebaseRepository.deleteDoc(widget.dong, widget.docId);
+          _showDialog();
         }
       },
       itemBuilder: (context) => [
@@ -249,6 +249,42 @@ class _DetailScreenState extends State<DetailScreen>
           value: 2,
         )
       ],
+    );
+  }
+
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("게시물 삭제"),
+          content: Text("삭제하시겠습니까?"),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    _firebaseRepository.deleteDoc(widget.dong, widget.docId);
+
+                    var count = 0;
+                    Navigator.popUntil(context, (route) {
+                      return count++ == 2;
+                    });
+                  },
+                  child: new Text("삭제"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: new Text("취소"),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 

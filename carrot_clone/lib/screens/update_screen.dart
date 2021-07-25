@@ -99,8 +99,8 @@ class _UpdateScreenState extends State<UpdateScreen> {
         '중고거래 글쓰기',
       ),
       actions: [
-        GestureDetector(
-          onTap: () {
+        TextButton(
+          onPressed: () {
             print(widget.dong);
             print(widget.docId);
             print(_titleController.text.toString());
@@ -114,15 +114,10 @@ class _UpdateScreenState extends State<UpdateScreen> {
               Navigator.pop(context);
             }
           },
-          child: Container(
-            width: 100,
-            child: Center(
-              child: Text(
-                '완료',
-                style: TextStyle(
-                  color: Color(0xfff08f4f),
-                ),
-              ),
+          child: Text(
+            '완료',
+            style: TextStyle(
+              color: Color(0xfff08f4f),
             ),
           ),
         ),

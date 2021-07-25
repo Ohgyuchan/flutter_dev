@@ -128,6 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
       stream: _firebaseRepository.itemCollection
           .doc('${locationTypeToString[_currentLocation]}')
           .collection('${locationTypeToString[_currentLocation]}')
+          .orderBy('cid', descending: false)
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();

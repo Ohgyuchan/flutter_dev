@@ -88,8 +88,8 @@ class _AddScreenState extends State<AddScreen> {
         '중고거래 글쓰기',
       ),
       actions: [
-        GestureDetector(
-          onTap: () {
+        TextButton(
+          onPressed: () {
             print(_firebaseRepository.getDataLengthPlus());
             if (_formKey.currentState!.validate()) {
               _firebaseRepository.createDoc(
@@ -102,15 +102,10 @@ class _AddScreenState extends State<AddScreen> {
               Navigator.pop(context);
             }
           },
-          child: Container(
-            width: 100,
-            child: Center(
-              child: Text(
-                '완료',
-                style: TextStyle(
-                  color: Color(0xfff08f4f),
-                ),
-              ),
+          child: Text(
+            '완료',
+            style: TextStyle(
+              color: Color(0xfff08f4f),
             ),
           ),
         ),

@@ -59,7 +59,7 @@ class FirebaseRepository {
 
 // 문서 삭제 (Delete)
   Future<void> deleteDoc(String dong, String docId) async {
-    itemCollection.doc(dong).collection(dong).doc(docId).delete();
+    await itemCollection.doc(dong).collection(dong).doc(docId).delete();
   }
 
   int getDataLengthPlus() => data.length + 1;
