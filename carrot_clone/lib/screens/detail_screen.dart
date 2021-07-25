@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carrot_clone/components/manner_temparature.dart';
 import 'package:carrot_clone/repositories/contents_repository.dart';
+import 'package:carrot_clone/repositories/firebase_repository.dart';
 import 'package:carrot_clone/screens/update_screen.dart';
 import 'package:carrot_clone/utils/data_utils.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ class _DetailScreenState extends State<DetailScreen>
     with SingleTickerProviderStateMixin {
   late Map<String, String> data;
   late ContentsRepository _contentsRepository;
+  late FirebaseRepository _firebaseRepository;
   late Size size;
   List<String> imgList = [];
   late int _currentIndex;
@@ -70,6 +72,7 @@ class _DetailScreenState extends State<DetailScreen>
         _appBarAnimationController.value = scrollPositionToAlpha / 255;
       });
     });
+    _firebaseRepository = FirebaseRepository();
     _contentsRepository = ContentsRepository();
     _loadMyFavoriteContentState();
     super.initState();
@@ -232,7 +235,9 @@ class _DetailScreenState extends State<DetailScreen>
               ),
             ),
           );
-        } else {}
+        } else {
+          _firebaseRepository.deleteDoc(widget.dong, widget.docId);
+        }
       },
       itemBuilder: (context) => [
         PopupMenuItem(
