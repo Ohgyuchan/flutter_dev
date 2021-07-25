@@ -1,18 +1,27 @@
 import 'package:carrot_clone/repositories/firebase_repository.dart';
+import 'package:carrot_clone/screens/detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class UpdateScreen extends StatefulWidget {
-  final String dong;
-  final String title;
-  final String price;
   final String docId;
-  const UpdateScreen(
-      {Key? key,
-      required this.title,
-      required this.price,
-      required this.dong,
-      required this.docId})
-      : super(key: key);
+  final String dong;
+  final String cid;
+  final String image;
+  final String title;
+  final String location;
+  final String price;
+  final String likes;
+  const UpdateScreen({
+    Key? key,
+    required this.cid,
+    required this.image,
+    required this.title,
+    required this.location,
+    required this.price,
+    required this.likes,
+    required this.dong,
+    required this.docId,
+  }) : super(key: key);
 
   @override
   _UpdateScreenState createState() => _UpdateScreenState();
@@ -100,18 +109,34 @@ class _UpdateScreenState extends State<UpdateScreen> {
       ),
       actions: [
         TextButton(
-          onPressed: () {
-            print(widget.dong);
-            print(widget.docId);
-            print(_titleController.text.toString());
-            print(_priceController.text.toString());
+          onPressed: () async {
             if (_formKey.currentState!.validate()) {
-              _firebaseRepository.updateDoc(
+              await _firebaseRepository.updateDoc(
                   widget.dong,
                   widget.docId,
                   _titleController.text.toString(),
                   _priceController.text.toString());
-              Navigator.pop(context);
+
+              var count = 0;
+              Navigator.popUntil(context, (route) {
+                return count++ == 2;
+              });
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailScreen(
+                    docId: widget.docId.toString(),
+                    dong: widget.dong.toString(),
+                    cid: widget.cid.toString(),
+                    image: widget.image.toString(),
+                    title: _titleController.text.toString(),
+                    location: widget.location.toString(),
+                    price: _priceController.text.toString(),
+                    likes: widget.likes.toString(),
+                  ),
+                ),
+              );
             }
           },
           child: Text(
