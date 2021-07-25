@@ -1,4 +1,5 @@
 import 'package:carrot_clone/repositories/firebase_repository.dart';
+import 'package:carrot_clone/screens/add_screen.dart';
 import 'package:carrot_clone/screens/detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:carrot_clone/utils/data_utils.dart';
@@ -33,11 +34,31 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: _appBarWidget(),
       body: _bodyWidget(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: _makeFAB(),
+    );
+  }
+
+  FloatingActionButton _makeFAB() {
+    return FloatingActionButton(
+      backgroundColor: Color(0xfff08f4f),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AddScreen(
+              dong: locationTypeToString[_currentLocation].toString(),
+            ),
+          ),
+        );
+      },
+      child: Icon(Icons.add),
     );
   }
 
   AppBar _appBarWidget() {
     return AppBar(
+      elevation: 1,
       title: PopupMenuButton<String>(
         offset: Offset(0, 30),
         shape: ShapeBorder.lerp(
@@ -81,7 +102,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      elevation: 1,
       actions: [
         IconButton(
           onPressed: () {},

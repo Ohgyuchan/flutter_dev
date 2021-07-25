@@ -206,10 +206,26 @@ class _DetailScreenState extends State<DetailScreen>
           onPressed: () {},
           icon: _makeAnimatedIcon(Icons.share_outlined),
         ),
-        IconButton(
-          onPressed: () {},
-          icon: _makeAnimatedIcon(Icons.more_vert),
+        _makePopUpMenu(),
+      ],
+    );
+  }
+
+  Widget _makePopUpMenu() {
+    return PopupMenuButton(
+      icon: _makeAnimatedIcon(Icons.more_vert),
+      onSelected: (int value) {
+        value == 1 ? print('수정') : print('삭제');
+      },
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          child: Text("수정"),
+          value: 1,
         ),
+        PopupMenuItem(
+          child: Text("삭제"),
+          value: 2,
+        )
       ],
     );
   }

@@ -28,6 +28,7 @@ class FirebaseRepository {
     data = [];
     for (int i = 0; i < snapshot.length; i++) {
       Map<String, String> _data = {
+        "docId": '${snapshot[i].id}',
         "cid": "${snapshot[i]['cid']}",
         "image": "${snapshot[i]['image']}",
         "title": "${snapshot[i]['title']}",
