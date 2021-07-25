@@ -47,10 +47,16 @@ class FirebaseRepository {
 // 문서 갱신 (Update)
   Future<void> updateDoc(
       String dong, String docId, String title, String price) async {
-    itemCollection.doc(dong).collection(dong).doc(docId).update({
-      'title': title,
-      'price': price,
-    });
+    await itemCollection
+        .doc(dong)
+        .collection(dong)
+        .doc(docId)
+        .update({'title': title});
+    await itemCollection
+        .doc(dong)
+        .collection(dong)
+        .doc(docId)
+        .update({'price': price});
   }
 
 // 문서 삭제 (Delete)
@@ -58,5 +64,5 @@ class FirebaseRepository {
     itemCollection.doc(dong).collection(dong).doc(docId).delete();
   }
 
-  int getDataLength() => data.length;
+  int getDataLengthPlus() => data.length + 1;
 }

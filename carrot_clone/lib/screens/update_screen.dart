@@ -20,13 +20,19 @@ class UpdateScreen extends StatefulWidget {
 
 class _UpdateScreenState extends State<UpdateScreen> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _titleController = new TextEditingController();
-  TextEditingController _priceController = new TextEditingController();
+  late String title;
+  late String price;
+  late TextEditingController _titleController;
+  late TextEditingController _priceController;
 
   late FirebaseRepository _firebaseRepository;
 
   @override
   void initState() {
+    title = widget.title;
+    price = widget.price;
+    _titleController = new TextEditingController(text: title.toString());
+    _priceController = new TextEditingController(text: price.toString());
     _firebaseRepository = FirebaseRepository();
     super.initState();
   }
@@ -64,7 +70,6 @@ class _UpdateScreenState extends State<UpdateScreen> {
               },
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: '제목',
               ),
             ),
             TextFormField(
@@ -96,9 +101,16 @@ class _UpdateScreenState extends State<UpdateScreen> {
       actions: [
         GestureDetector(
           onTap: () {
+            print(widget.dong);
+            print(widget.docId);
+            print(_titleController.text.toString());
+            print(_priceController.text.toString());
             if (_formKey.currentState!.validate()) {
               _firebaseRepository.updateDoc(
-                  widget.dong, widget.docId, widget.title, widget.price);
+                  widget.dong,
+                  widget.docId,
+                  _titleController.text.toString(),
+                  _priceController.text.toString());
               Navigator.pop(context);
             }
           },

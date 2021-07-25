@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 
 class AddScreen extends StatefulWidget {
   final String dong;
-  const AddScreen({Key? key, required this.dong}) : super(key: key);
+  final FirebaseRepository firebaseRepository;
+  const AddScreen(
+      {Key? key, required this.dong, required this.firebaseRepository})
+      : super(key: key);
 
   @override
   _AddScreenState createState() => _AddScreenState();
@@ -18,7 +21,7 @@ class _AddScreenState extends State<AddScreen> {
 
   @override
   void initState() {
-    _firebaseRepository = FirebaseRepository();
+    _firebaseRepository = widget.firebaseRepository;
     super.initState();
   }
 
@@ -87,10 +90,11 @@ class _AddScreenState extends State<AddScreen> {
       actions: [
         GestureDetector(
           onTap: () {
+            print(_firebaseRepository.getDataLengthPlus());
             if (_formKey.currentState!.validate()) {
               _firebaseRepository.createDoc(
                   widget.dong,
-                  '${_firebaseRepository.getDataLength() + 1}',
+                  '${_firebaseRepository.getDataLengthPlus()}',
                   'assets/images/carrot.jpg',
                   _titleController.text.toString(),
                   '제주 제주시 ${widget.dong}',

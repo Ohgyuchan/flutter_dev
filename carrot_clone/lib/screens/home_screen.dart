@@ -47,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => AddScreen(
+              firebaseRepository: _firebaseRepository,
               dong: locationTypeToString[_currentLocation].toString(),
             ),
           ),

@@ -217,8 +217,8 @@ class ProfileScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  // Navigator.push(context,
-                  //     MaterialPageRoute(builder: (_) => MyFavoriteScreen()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => MyFavoriteScreen()));
                 },
                 child: Column(
                   children: [

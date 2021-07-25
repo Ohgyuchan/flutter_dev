@@ -226,7 +226,7 @@ class _DetailScreenState extends State<DetailScreen>
             MaterialPageRoute(
               builder: (context) => UpdateScreen(
                 docId: widget.docId,
-                dong: data['dong'].toString(),
+                dong: widget.dong.toString(),
                 title: data['title'].toString(),
                 price: data['price'].toString(),
               ),
