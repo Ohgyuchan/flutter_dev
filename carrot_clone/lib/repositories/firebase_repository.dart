@@ -1,6 +1,5 @@
 import 'package:carrot_clone/repositories/contents_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class FirebaseRepository {
   List<Map<String, String>> data = [];
@@ -11,7 +10,6 @@ class FirebaseRepository {
 // 문서 생성 (Create)
   Future<void> createDoc(String dong, String cid, String image, String title,
       String location, String price) async {
-    await Firebase.initializeApp();
     itemCollection.doc(dong).collection(dong).add({
       "cid": cid,
       "image": image,
@@ -23,36 +21,20 @@ class FirebaseRepository {
   }
 
 // 문서 조회 (Read)
-  Future<List<Map<String, String>>> readDoc(
+  Future<List<Map<String, String>>> readDocFromLocation(
       String dong, List<DocumentSnapshot> snapshot) async {
-    print('readDoc');
+    data = [];
     for (int i = 0; i < snapshot.length; i++) {
-      itemCollection
-          .doc(dong)
-          .collection(dong)
-          .doc(snapshot[i].id)
-          .get()
-          .then((doc) {
-        Map<String, String> _data = {
-          "cid": "${doc['cid']}",
-          "image": "${doc['image']}",
-          "title": "${doc['title']}",
-          "location": "${doc['location']}",
-          "price": "${doc['price']}",
-          "likes": "${doc['likes']}"
-        };
-        data.add(_data);
-
-        // contentsRepository.addDataList(data);
-
-        print("cid: ${doc['cid']}");
-        print("cid: ${doc['image']}");
-        print("title: ${doc['title']}");
-        print("location: ${doc['location']}");
-        print("price: ${doc['price']}");
-        print("likes: ${doc['likes']}");
-        print('doc');
-      });
+      Map<String, String> _data = {
+        "docId": '${snapshot[i].id}',
+        "cid": "${snapshot[i]['cid']}",
+        "image": "${snapshot[i]['image']}",
+        "title": "${snapshot[i]['title']}",
+        "location": "${snapshot[i]['location']}",
+        "price": "${snapshot[i]['price']}",
+        "likes": "${snapshot[i]['likes']}"
+      };
+      data.add(_data);
     }
     if (data.isEmpty) {
       throw Exception("Data is Empty");
@@ -61,15 +43,24 @@ class FirebaseRepository {
   }
 
 // 문서 갱신 (Update)
-  Future<void> updateDoc(String docId, String title, String image) async {
-    itemCollection.doc(docId).update({
-      'title': title,
-      'image': image,
-    });
+  Future<void> updateDoc(
+      String dong, String docId, String title, String price) async {
+    await itemCollection
+        .doc(dong)
+        .collection(dong)
+        .doc(docId)
+        .update({'title': title});
+    await itemCollection
+        .doc(dong)
+        .collection(dong)
+        .doc(docId)
+        .update({'price': price});
   }
 
 // 문서 삭제 (Delete)
-  Future<void> deleteDoc(String docId) async {
-    itemCollection.doc(docId).delete();
+  Future<void> deleteDoc(String dong, String docId) async {
+    await itemCollection.doc(dong).collection(dong).doc(docId).delete();
   }
+
+  int getDataLengthPlus() => data.length + 1;
 }

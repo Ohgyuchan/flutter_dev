@@ -1,11 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carrot_clone/components/manner_temparature.dart';
 import 'package:carrot_clone/repositories/contents_repository.dart';
+import 'package:carrot_clone/repositories/firebase_repository.dart';
+import 'package:carrot_clone/screens/update_screen.dart';
 import 'package:carrot_clone/utils/data_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class DetailScreen extends StatefulWidget {
+  final String docId;
+  final String dong;
   final String cid;
   final String image;
   final String title;
@@ -13,15 +17,17 @@ class DetailScreen extends StatefulWidget {
   final String price;
   final String likes;
 
-  const DetailScreen(
-      {Key? key,
-      required this.cid,
-      required this.image,
-      required this.title,
-      required this.location,
-      required this.price,
-      required this.likes})
-      : super(key: key);
+  const DetailScreen({
+    Key? key,
+    required this.cid,
+    required this.image,
+    required this.title,
+    required this.location,
+    required this.price,
+    required this.likes,
+    required this.dong,
+    required this.docId,
+  }) : super(key: key);
 
   @override
   _DetailScreenState createState() => _DetailScreenState();
@@ -31,6 +37,7 @@ class _DetailScreenState extends State<DetailScreen>
     with SingleTickerProviderStateMixin {
   late Map<String, String> data;
   late ContentsRepository _contentsRepository;
+  late FirebaseRepository _firebaseRepository;
   late Size size;
   List<String> imgList = [];
   late int _currentIndex;
@@ -65,6 +72,7 @@ class _DetailScreenState extends State<DetailScreen>
         _appBarAnimationController.value = scrollPositionToAlpha / 255;
       });
     });
+    _firebaseRepository = FirebaseRepository();
     _contentsRepository = ContentsRepository();
     _loadMyFavoriteContentState();
     super.initState();
@@ -206,11 +214,77 @@ class _DetailScreenState extends State<DetailScreen>
           onPressed: () {},
           icon: _makeAnimatedIcon(Icons.share_outlined),
         ),
-        IconButton(
-          onPressed: () {},
-          icon: _makeAnimatedIcon(Icons.more_vert),
-        ),
+        _makePopUpMenu(context),
       ],
+    );
+  }
+
+  Widget _makePopUpMenu(BuildContext context) {
+    return PopupMenuButton(
+      icon: _makeAnimatedIcon(Icons.more_vert),
+      onSelected: (int value) {
+        if (value == 1) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => UpdateScreen(
+                docId: widget.docId,
+                dong: widget.dong.toString(),
+                title: data['title'].toString(),
+                price: data['price'].toString(),
+              ),
+            ),
+          );
+        } else {
+          _showDialog();
+        }
+      },
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          child: Text("수정"),
+          value: 1,
+        ),
+        PopupMenuItem(
+          child: Text("삭제"),
+          value: 2,
+        )
+      ],
+    );
+  }
+
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("게시물 삭제"),
+          content: Text("삭제하시겠습니까?"),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    _firebaseRepository.deleteDoc(widget.dong, widget.docId);
+
+                    var count = 0;
+                    Navigator.popUntil(context, (route) {
+                      return count++ == 2;
+                    });
+                  },
+                  child: new Text("삭제"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: new Text("취소"),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 

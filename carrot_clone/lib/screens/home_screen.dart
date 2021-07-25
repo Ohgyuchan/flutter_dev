@@ -1,5 +1,5 @@
-import 'package:carrot_clone/repositories/contents_repository.dart';
 import 'package:carrot_clone/repositories/firebase_repository.dart';
+import 'package:carrot_clone/screens/add_screen.dart';
 import 'package:carrot_clone/screens/detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:carrot_clone/utils/data_utils.dart';
@@ -15,9 +15,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late String _currentLocation;
-  late ContentsRepository _contentsRepository;
   late FirebaseRepository _firebaseRepository;
-  List<Map<String, String>> data = [];
   final Map<String, String> locationTypeToString = {
     'ara': '아라동',
     'ora': '오라동',
@@ -29,19 +27,39 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _currentLocation = 'ara';
     _firebaseRepository = FirebaseRepository();
-    _contentsRepository = ContentsRepository();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBarWidget(),
-      body: _bodyWidget(context),
+      body: _bodyWidget(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: _makeFAB(),
+    );
+  }
+
+  FloatingActionButton _makeFAB() {
+    return FloatingActionButton(
+      backgroundColor: Color(0xfff08f4f),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AddScreen(
+              firebaseRepository: _firebaseRepository,
+              dong: locationTypeToString[_currentLocation].toString(),
+            ),
+          ),
+        );
+      },
+      child: Icon(Icons.add),
     );
   }
 
   AppBar _appBarWidget() {
     return AppBar(
+      elevation: 1,
       title: PopupMenuButton<String>(
         offset: Offset(0, 30),
         shape: ShapeBorder.lerp(
@@ -85,7 +103,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      elevation: 1,
       actions: [
         IconButton(
           onPressed: () {},
@@ -106,53 +123,50 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _bodyWidget(BuildContext context) {
+  Widget _bodyWidget() {
     return StreamBuilder<QuerySnapshot>(
       stream: _firebaseRepository.itemCollection
           .doc('${locationTypeToString[_currentLocation]}')
           .collection('${locationTypeToString[_currentLocation]}')
+          .orderBy('cid', descending: false)
           .snapshots(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) return _makeDataList(snapshot.data!.docs);
-        return LinearProgressIndicator();
+        if (!snapshot.hasData) return LinearProgressIndicator();
+        return _bodyBuilder(snapshot.data!.docs);
       },
     );
   }
 
-  // Widget _bodyWidget() {
-  //   return FutureBuilder(
-  //     future: _contentsRepository.loadContentsFromLocation(_currentLocation),
-  //     builder: (context, snapshot) {
-  //       if (snapshot.connectionState != ConnectionState.done) {
-  //         return Center(
-  //           child: CircularProgressIndicator(),
-  //         );
-  //       } else if (snapshot.hasError) {
-  //         if (snapshot.error.toString() == "Exception: Data is Null") {
-  //           return Center(
-  //             child: Text('해당 지역에 데이터가 없습니다.'),
-  //           );
-  //         }
-  //         return Center(
-  //           child: Text('데이터 오류'),
-  //         );
-  //       } else if (snapshot.hasData) {
-  //         return _makeDataList(snapshot.data as List<Map<String, String>>);
-  //       }
-  //
-  //       return Center(
-  //         child: CircularProgressIndicator(),
-  //       );
-  //     },
-  //   );
-  // }
+  Widget _bodyBuilder(List<DocumentSnapshot> snapshot) {
+    return FutureBuilder(
+      future:
+          _firebaseRepository.readDocFromLocation(_currentLocation, snapshot),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          if (snapshot.error.toString() == "Exception: Data is Empty") {
+            return Center(
+              child: Text('해당 지역에 데이터가 없습니다.'),
+            );
+          }
+          return Center(
+            child: Text('데이터 오류'),
+          );
+        } else if (snapshot.hasData) {
+          return _makeDataList(snapshot.data as List<Map<String, String>>);
+        }
 
-  Widget _makeDataList(List<DocumentSnapshot> snapshot) {
-    print(locationTypeToString[_currentLocation]);
-    print(snapshot.length);
-    data = _firebaseRepository.readDoc(_currentLocation, snapshot)
-        as List<Map<String, String>>;
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
 
+  Widget _makeDataList(List<Map<String, String>> data) {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       itemBuilder: (BuildContext _context, int index) {
@@ -162,6 +176,8 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               MaterialPageRoute(
                 builder: (context) => DetailScreen(
+                  docId: data[index]['docId'].toString(),
+                  dong: locationTypeToString[_currentLocation].toString(),
                   cid: "${data[index]['cid']}",
                   image: "${data[index]['image']}",
                   title: "${data[index]['title']}",
@@ -171,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             );
-            print(data[index]['title']);
+            print('title: ' + '${data[index]['title']}');
           },
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 10),

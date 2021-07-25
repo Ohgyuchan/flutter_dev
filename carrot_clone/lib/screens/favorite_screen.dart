@@ -79,17 +79,19 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
       itemBuilder: (BuildContext _context, int index) {
         return GestureDetector(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => DetailScreen(
-                        cid: "${data[index]['cid']}",
-                        image: "${data[index]['image']}",
-                        title: "${data[index]['title']}",
-                        location: "${data[index]['location']}",
-                        price: "${data[index]['price']}",
-                        likes: "${data[index]['likes']}")));
-            print(data[index]['title']);
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: (context) => DetailScreen(
+            //               docId: 'ex',
+            //               dong: 'ex',
+            //               cid: "${data[index]['cid']}",
+            //               image: "${data[index]['image']}",
+            //               title: "${data[index]['title']}",
+            //               location: "${data[index]['location']}",
+            //               price: "${data[index]['price']}",
+            //               likes: "${data[index]['likes']}",
+            //             )));
           },
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 10),
