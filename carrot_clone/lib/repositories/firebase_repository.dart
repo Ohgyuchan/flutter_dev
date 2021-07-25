@@ -12,7 +12,6 @@ class FirebaseRepository {
 // 문서 생성 (Create)
   Future<void> createDoc(String dong, String cid, String image, String title,
       String location, String price) async {
-    await Firebase.initializeApp();
     itemCollection.doc(dong).collection(dong).add({
       "cid": cid,
       "image": image,
@@ -45,15 +44,18 @@ class FirebaseRepository {
   }
 
 // 문서 갱신 (Update)
-  Future<void> updateDoc(String docId, String title, String image) async {
-    itemCollection.doc(docId).update({
+  Future<void> updateDoc(
+      String dong, String docId, String title, String price) async {
+    itemCollection.doc(dong).collection(dong).doc(docId).update({
       'title': title,
-      'image': image,
+      'price': price,
     });
   }
 
 // 문서 삭제 (Delete)
-  Future<void> deleteDoc(String docId) async {
-    itemCollection.doc(docId).delete();
+  Future<void> deleteDoc(String dong, String docId) async {
+    itemCollection.doc(dong).collection(dong).doc(docId).delete();
   }
+
+  int getDataLength() => data.length;
 }

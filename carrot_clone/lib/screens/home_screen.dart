@@ -163,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             );
-            print(data[index]['title']);
+            print('title: ' + '${data[index]['title']}');
           },
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 10),
