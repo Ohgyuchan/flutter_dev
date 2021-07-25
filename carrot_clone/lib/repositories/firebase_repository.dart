@@ -1,6 +1,7 @@
 import 'package:carrot_clone/repositories/contents_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 
 class FirebaseRepository {
   List<Map<String, String>> data = [];
@@ -25,15 +26,17 @@ class FirebaseRepository {
 // 문서 조회 (Read)
   Future<List<Map<String, String>>> readDocFromLocation(
       String dong, List<DocumentSnapshot> snapshot) async {
+    data = [];
     for (int i = 0; i < snapshot.length; i++) {
-      data.add({
+      Map<String, String> _data = {
         "cid": "${snapshot[i]['cid']}",
         "image": "${snapshot[i]['image']}",
         "title": "${snapshot[i]['title']}",
         "location": "${snapshot[i]['location']}",
         "price": "${snapshot[i]['price']}",
         "likes": "${snapshot[i]['likes']}"
-      });
+      };
+      data.add(_data);
     }
     if (data.isEmpty) {
       throw Exception("Data is Empty");

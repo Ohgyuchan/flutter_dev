@@ -109,8 +109,8 @@ class _HomeScreenState extends State<HomeScreen> {
           .collection('${locationTypeToString[_currentLocation]}')
           .snapshots(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) return _bodyBuilder(snapshot.data!.docs);
-        return LinearProgressIndicator();
+        if (!snapshot.hasData) return LinearProgressIndicator();
+        return _bodyBuilder(snapshot.data!.docs);
       },
     );
   }
@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasError) {
-          if (snapshot.error.toString() == "Exception: Data is Null") {
+          if (snapshot.error.toString() == "Exception: Data is Empty") {
             return Center(
               child: Text('해당 지역에 데이터가 없습니다.'),
             );
