@@ -1,9 +1,10 @@
 import 'package:carrot_clone/repositories/contents_repository.dart';
 import 'package:carrot_clone/repositories/firebase_repository.dart';
 import 'package:carrot_clone/screens/detail_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:carrot_clone/utils/data_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:carrot_clone/utils/data_utils.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,6 +16,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late String _currentLocation;
   late ContentsRepository _contentsRepository;
+  late FirebaseRepository _firebaseRepository;
+  List<Map<String, String>> data = [];
   final Map<String, String> locationTypeToString = {
     'ara': '아라동',
     'ora': '오라동',
@@ -25,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _currentLocation = 'ara';
+    _firebaseRepository = FirebaseRepository();
     _contentsRepository = ContentsRepository();
   }
 
@@ -32,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBarWidget(),
-      body: _bodyWidget(),
+      body: _bodyWidget(context),
     );
   }
 
@@ -102,35 +106,53 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _bodyWidget() {
-    return FutureBuilder(
-      future: _contentsRepository.loadContentsFromLocation(_currentLocation),
+  Widget _bodyWidget(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _firebaseRepository.itemCollection
+          .doc('${locationTypeToString[_currentLocation]}')
+          .collection('${locationTypeToString[_currentLocation]}')
+          .snapshots(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (snapshot.hasError) {
-          if (snapshot.error.toString() == "Exception: Data is Null") {
-            return Center(
-              child: Text('해당 지역에 데이터가 없습니다.'),
-            );
-          }
-          return Center(
-            child: Text('데이터 오류'),
-          );
-        } else if (snapshot.hasData) {
-          return _makeDataList(snapshot.data as List<Map<String, String>>);
-        }
-
-        return Center(
-          child: CircularProgressIndicator(),
-        );
+        if (snapshot.hasData) return _makeDataList(snapshot.data!.docs);
+        return LinearProgressIndicator();
       },
     );
   }
 
-  Widget _makeDataList(List<Map<String, String>> data) {
+  // Widget _bodyWidget() {
+  //   return FutureBuilder(
+  //     future: _contentsRepository.loadContentsFromLocation(_currentLocation),
+  //     builder: (context, snapshot) {
+  //       if (snapshot.connectionState != ConnectionState.done) {
+  //         return Center(
+  //           child: CircularProgressIndicator(),
+  //         );
+  //       } else if (snapshot.hasError) {
+  //         if (snapshot.error.toString() == "Exception: Data is Null") {
+  //           return Center(
+  //             child: Text('해당 지역에 데이터가 없습니다.'),
+  //           );
+  //         }
+  //         return Center(
+  //           child: Text('데이터 오류'),
+  //         );
+  //       } else if (snapshot.hasData) {
+  //         return _makeDataList(snapshot.data as List<Map<String, String>>);
+  //       }
+  //
+  //       return Center(
+  //         child: CircularProgressIndicator(),
+  //       );
+  //     },
+  //   );
+  // }
+
+  Widget _makeDataList(List<DocumentSnapshot> snapshot) {
+    print(locationTypeToString[_currentLocation]);
+    print(snapshot.length);
+    data = _firebaseRepository.readDoc(_currentLocation, snapshot)
+        as List<Map<String, String>>;
+
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       itemBuilder: (BuildContext _context, int index) {
@@ -139,18 +161,21 @@ class _HomeScreenState extends State<HomeScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => DetailScreen(
-                      cid: "${data[index]['cid']}",
-                      image: "${data[index]['image']}",
-                      title: "${data[index]['title']}",
-                      location: "${data[index]['location']}",
-                      price: "${data[index]['price']}",
-                      likes: "${data[index]['likes']}")),
+                builder: (context) => DetailScreen(
+                  cid: "${data[index]['cid']}",
+                  image: "${data[index]['image']}",
+                  title: "${data[index]['title']}",
+                  location: "${data[index]['location']}",
+                  price: "${data[index]['price']}",
+                  likes: "${data[index]['likes']}",
+                ),
+              ),
             );
             print(data[index]['title']);
           },
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 10),
+            color: Colors.transparent,
             height: 110,
             child: Row(
               children: [

@@ -1,4 +1,3 @@
-import 'package:carrot_clone/screens/favorite_screen.dart';
 import 'package:carrot_clone/screens/home_screen.dart';
 import 'package:carrot_clone/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ class AppScreen extends StatefulWidget {
 
 class _AppScreenState extends State<AppScreen> {
   late int _currentPageIndex;
-
   @override
   void initState() {
     super.initState();
