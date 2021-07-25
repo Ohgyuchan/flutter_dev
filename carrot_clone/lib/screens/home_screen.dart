@@ -174,6 +174,8 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               MaterialPageRoute(
                 builder: (context) => DetailScreen(
+                  docId: data[index]['docId'].toString(),
+                  dong: locationTypeToString[_currentLocation].toString(),
                   cid: "${data[index]['cid']}",
                   image: "${data[index]['image']}",
                   title: "${data[index]['title']}",

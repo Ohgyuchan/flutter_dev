@@ -1,11 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carrot_clone/components/manner_temparature.dart';
 import 'package:carrot_clone/repositories/contents_repository.dart';
+import 'package:carrot_clone/screens/update_screen.dart';
 import 'package:carrot_clone/utils/data_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class DetailScreen extends StatefulWidget {
+  final String docId;
+  final String dong;
   final String cid;
   final String image;
   final String title;
@@ -13,15 +16,17 @@ class DetailScreen extends StatefulWidget {
   final String price;
   final String likes;
 
-  const DetailScreen(
-      {Key? key,
-      required this.cid,
-      required this.image,
-      required this.title,
-      required this.location,
-      required this.price,
-      required this.likes})
-      : super(key: key);
+  const DetailScreen({
+    Key? key,
+    required this.cid,
+    required this.image,
+    required this.title,
+    required this.location,
+    required this.price,
+    required this.likes,
+    required this.dong,
+    required this.docId,
+  }) : super(key: key);
 
   @override
   _DetailScreenState createState() => _DetailScreenState();
@@ -215,7 +220,19 @@ class _DetailScreenState extends State<DetailScreen>
     return PopupMenuButton(
       icon: _makeAnimatedIcon(Icons.more_vert),
       onSelected: (int value) {
-        value == 1 ? print('수정') : print('삭제');
+        if (value == 1) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => UpdateScreen(
+                docId: widget.docId,
+                dong: data['dong'].toString(),
+                title: data['title'].toString(),
+                price: data['price'].toString(),
+              ),
+            ),
+          );
+        } else {}
       },
       itemBuilder: (context) => [
         PopupMenuItem(
