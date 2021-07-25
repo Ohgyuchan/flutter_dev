@@ -1,9 +1,7 @@
-import 'package:carrot_clone/repositories/contents_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseRepository {
   List<Map<String, String>> data = [];
-  ContentsRepository contentsRepository = new ContentsRepository();
   CollectionReference itemCollection =
       FirebaseFirestore.instance.collection('items');
 
