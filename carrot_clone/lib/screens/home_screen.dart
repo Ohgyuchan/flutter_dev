@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
-
+  // 파이어베이서 불러오기 전 _bodyWidget
   // Widget _bodyWidget() {
   //   return FutureBuilder(
   //     future: _contentsRepository.loadContentsFromLocation(_currentLocation),
