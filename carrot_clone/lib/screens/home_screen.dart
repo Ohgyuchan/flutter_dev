@@ -37,8 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: _appBarWidget(),
       body: _bodyWidget(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: _makeFAB(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
@@ -126,48 +126,48 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _bodyWidget() {
-    return FutureBuilder(
-      future: _contentsRepository.loadContentsFromLocation(_currentLocation),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (snapshot.hasError) {
-          if (snapshot.error.toString() == "Exception: Data is Null") {
-            return Center(
-              child: Text('해당 지역에 데이터가 없습니다.'),
-            );
-          }
-          return Center(
-            child: Text('데이터 오류'),
-          );
-        } else if (snapshot.hasData) {
-          return _makeDataList(snapshot.data as List<Map<String, String>>);
-        }
+  // Widget _bodyWidget() {
+  //   return FutureBuilder(
+  //     future: _contentsRepository.loadContentsFromLocation(_currentLocation),
+  //     builder: (context, snapshot) {
+  //       if (snapshot.connectionState != ConnectionState.done) {
+  //         return Center(
+  //           child: CircularProgressIndicator(),
+  //         );
+  //       } else if (snapshot.hasError) {
+  //         if (snapshot.error.toString() == "Exception: Data is Null") {
+  //           return Center(
+  //             child: Text('해당 지역에 데이터가 없습니다.'),
+  //           );
+  //         }
+  //         return Center(
+  //           child: Text('데이터 오류'),
+  //         );
+  //       } else if (snapshot.hasData) {
+  //         return _makeDataList(snapshot.data as List<Map<String, String>>);
+  //       }
+  //
+  //       return Center(
+  //         child: CircularProgressIndicator(),
+  //       );
+  //     },
+  //   );
+  // }
 
-        return Center(
-          child: CircularProgressIndicator(),
-        );
+  Widget _bodyWidget() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _firebaseRepository.itemCollection
+          .doc('${locationTypeToString[_currentLocation]}')
+          .collection('${locationTypeToString[_currentLocation]}')
+          .orderBy('cid', descending: false)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return LinearProgressIndicator();
+        return _bodyBuilder(snapshot.data!.docs);
       },
     );
   }
 
-  // Widget _bodyWidget() {
-  //   return StreamBuilder<QuerySnapshot>(
-  //     stream: _firebaseRepository.itemCollection
-  //         .doc('${locationTypeToString[_currentLocation]}')
-  //         .collection('${locationTypeToString[_currentLocation]}')
-  //         .orderBy('cid', descending: false)
-  //         .snapshots(),
-  //     builder: (context, snapshot) {
-  //       if (!snapshot.hasData) return LinearProgressIndicator();
-  //       return _bodyBuilder(snapshot.data!.docs);
-  //     },
-  //   );
-  // }
-  //
   Widget _bodyBuilder(List<DocumentSnapshot> snapshot) {
     return FutureBuilder(
       future:
@@ -203,13 +203,6 @@ class _HomeScreenState extends State<HomeScreen> {
       itemBuilder: (BuildContext _context, int index) {
         return GestureDetector(
           onTap: () {
-            _firebaseRepository.createDoc(
-                locationTypeToString[_currentLocation].toString(),
-                "${data[index]['cid']}",
-                "${data[index]['image']}",
-                "${data[index]['title']}",
-                "${data[index]['location']}",
-                "${data[index]['price']}");
             Navigator.push(
               context,
               MaterialPageRoute(
