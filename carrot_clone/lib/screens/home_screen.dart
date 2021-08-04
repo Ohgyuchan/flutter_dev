@@ -1,3 +1,4 @@
+import 'package:carrot_clone/repositories/contents_repository.dart';
 import 'package:carrot_clone/repositories/firebase_repository.dart';
 import 'package:carrot_clone/screens/add_screen.dart';
 import 'package:carrot_clone/screens/detail_screen.dart';
@@ -16,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late String _currentLocation;
   late FirebaseRepository _firebaseRepository;
+  late ContentsRepository _contentsRepository;
   final Map<String, String> locationTypeToString = {
     'ara': '아라동',
     'ora': '오라동',
@@ -26,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _currentLocation = 'ara';
+    _contentsRepository = ContentsRepository();
     _firebaseRepository = FirebaseRepository();
   }
 
@@ -34,8 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: _appBarWidget(),
       body: _bodyWidget(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: _makeFAB(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
@@ -122,6 +125,34 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
+  // 파이어베이서 불러오기 전 _bodyWidget
+  // Widget _bodyWidget() {
+  //   return FutureBuilder(
+  //     future: _contentsRepository.loadContentsFromLocation(_currentLocation),
+  //     builder: (context, snapshot) {
+  //       if (snapshot.connectionState != ConnectionState.done) {
+  //         return Center(
+  //           child: CircularProgressIndicator(),
+  //         );
+  //       } else if (snapshot.hasError) {
+  //         if (snapshot.error.toString() == "Exception: Data is Null") {
+  //           return Center(
+  //             child: Text('해당 지역에 데이터가 없습니다.'),
+  //           );
+  //         }
+  //         return Center(
+  //           child: Text('데이터 오류'),
+  //         );
+  //       } else if (snapshot.hasData) {
+  //         return _makeDataList(snapshot.data as List<Map<String, String>>);
+  //       }
+  //
+  //       return Center(
+  //         child: CircularProgressIndicator(),
+  //       );
+  //     },
+  //   );
+  // }
 
   Widget _bodyWidget() {
     return StreamBuilder<QuerySnapshot>(

@@ -48,6 +48,7 @@ class FirebaseRepository {
         .collection(dong)
         .doc(docId)
         .update({'title': title});
+
     await itemCollection
         .doc(dong)
         .collection(dong)
