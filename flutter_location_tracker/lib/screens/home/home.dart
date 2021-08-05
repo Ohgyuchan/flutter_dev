@@ -32,26 +32,27 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.grey.shade300,
-      body: Obx(() => Stack(
-            children: [
-              appController.activeDraggableWidget.value,
-              Positioned(
-                  top: 10,
-                  right: 15,
-                  child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(.5),
-                              blurRadius: 3,
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(20)),
-                      child:
-                          IconButton(icon: Icon(Icons.map), onPressed: () {})))
-            ],
-          )),
+      body: Obx(
+        () => Stack(
+          children: [
+            appController.activeDraggableWidget.value,
+            Positioned(
+                top: 10,
+                right: 15,
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(.5),
+                            blurRadius: 3,
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(20)),
+                    child: IconButton(icon: Icon(Icons.map), onPressed: () {})))
+          ],
+        ),
+      ),
     );
   }
 }
