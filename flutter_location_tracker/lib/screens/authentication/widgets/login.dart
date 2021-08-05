@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_location_tracker/constants/controllers.dart';
 import 'package:flutter_location_tracker/widgets/custom_button.dart';
-import 'package:get/get.dart';
 
 class LoginWidget extends StatelessWidget {
   @override
