@@ -1,4 +1,4 @@
-final String imageAssetsRoot = "images/";
+final String imageAssetsRoot = "assets/images/";
 final String logo2 = _getImagePath("lg2.png");
 final String bg3 = _getImagePath("bg3.png");
 final String android = _getImagePath("and.png");
