@@ -11,5 +11,10 @@ class DeviceModel {
   final String token;
   final Map location;
 
-  DeviceModel({this.id, this.name, this.os, this.token, this.location});
+  DeviceModel(
+      {required this.id,
+      required this.name,
+      required this.os,
+      required this.token,
+      required this.location});
 }
