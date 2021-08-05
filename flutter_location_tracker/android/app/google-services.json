@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "857765155536",
+    "project_id": "flutter-location-tracker-bacdd",
+    "storage_bucket": "flutter-location-tracker-bacdd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857765155536:android:31f090af54330dfbeb84d5",
+        "android_client_info": {
+          "package_name": "com.example.flutter_location_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857765155536-1v64bb4snh80s8patepgmrotls0642b8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVcHnkhYDBPJCIPTVQjEZ6OeB3jE7KZYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857765155536-1v64bb4snh80s8patepgmrotls0642b8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
