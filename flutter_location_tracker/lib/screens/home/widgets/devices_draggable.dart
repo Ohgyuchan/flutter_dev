@@ -1,7 +1,6 @@
-import 'package:cadevo/models/device.dart';
 import 'package:flutter/material.dart';
-
-import 'device_widget.dart';
+import 'package:flutter_location_tracker/models/device_model.dart';
+import 'package:flutter_location_tracker/screens/home/widgets/devices_widget.dart';
 
 class DevicesDraggable extends StatelessWidget {
   @override

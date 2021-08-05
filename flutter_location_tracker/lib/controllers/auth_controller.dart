@@ -26,7 +26,7 @@ class AuthController extends GetxController {
     ever(firebaseUser, _setInitialScreen);
   }
 
-  _setInitialScreen(User user) {
+  _setInitialScreen(User? user) {
     if (user == null) {
       Get.offAll(() => AuthenticationScreen());
     } else {
@@ -41,7 +41,7 @@ class AuthController extends GetxController {
           .signInWithEmailAndPassword(
               email: email.text.trim(), password: password.text.trim())
           .then((result) {
-        String _userId = result.user.uid;
+        String _userId = result.user!.uid;
         _initializeUserModel(_userId);
         _clearControllers();
       });

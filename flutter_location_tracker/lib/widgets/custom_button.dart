@@ -4,13 +4,13 @@ import 'custom_text.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
-  final Color txtColor;
-  final Color bgColor;
-  final Color shadowColor;
+  final Color? txtColor;
+  final Color? bgColor;
+  final Color? shadowColor;
   final Function onTap;
 
   const CustomButton(
-      {Key key,
+      {Key? key,
       required this.text,
       this.txtColor,
       this.bgColor,
@@ -21,7 +21,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: onTap(),
       child: PhysicalModel(
         color: Colors.grey.withOpacity(.4),
         elevation: 5,

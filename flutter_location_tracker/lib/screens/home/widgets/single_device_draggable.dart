@@ -1,9 +1,9 @@
-import 'package:cadevo/constants/asset_path.dart';
-import 'package:cadevo/constants/controllers.dart';
-import 'package:cadevo/screens/home/widgets/device_action_button.dart';
-import 'package:cadevo/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_location_tracker/constants/asset_path.dart';
+import 'package:flutter_location_tracker/constants/controllers.dart';
+import 'package:flutter_location_tracker/widgets/custom_text.dart';
 
+import 'device_action_button.dart';
 import 'devices_draggable.dart';
 
 class SingleDeviceDraggable extends StatelessWidget {
@@ -41,7 +41,7 @@ class SingleDeviceDraggable extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 15),
                         child: CustomText(
-                          text: appController.activeDevie.value.name,
+                          text: appController.activeDevie.value.name.toString(),
                           size: 22,
                           weight: FontWeight.bold,
                         ),

@@ -1,5 +1,5 @@
-import 'package:cadevo/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_location_tracker/widgets/custom_text.dart';
 
 class DeviceActionButton extends StatelessWidget {
   final String image;
@@ -7,15 +7,12 @@ class DeviceActionButton extends StatelessWidget {
   final Function onTap;
 
   const DeviceActionButton(
-      {Key key,
-      @required this.image,
-      @required this.text,
-      @required this.onTap})
+      {Key? key, required this.image, required this.text, required this.onTap})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: onTap(),
       child: Container(
         margin: EdgeInsets.all(8),
         padding: EdgeInsets.all(8),

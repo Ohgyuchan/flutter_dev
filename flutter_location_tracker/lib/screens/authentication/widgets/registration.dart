@@ -1,8 +1,6 @@
-import 'package:cadevo/constants/controllers.dart';
-import 'package:cadevo/screens/home/home.dart';
-import 'package:cadevo/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_location_tracker/constants/controllers.dart';
+import 'package:flutter_location_tracker/widgets/custom_button.dart';
 
 class RegistrationWidget extends StatelessWidget {
   @override

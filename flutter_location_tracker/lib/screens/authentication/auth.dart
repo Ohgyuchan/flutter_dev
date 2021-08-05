@@ -1,9 +1,9 @@
-import 'package:cadevo/constants/asset_path.dart';
-import 'package:cadevo/controllers/appController.dart';
-import 'package:cadevo/screens/authentication/widgets/bottom_text.dart';
-import 'package:cadevo/screens/authentication/widgets/login.dart';
-import 'package:cadevo/screens/authentication/widgets/registration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_location_tracker/constants/asset_path.dart';
+import 'package:flutter_location_tracker/controllers/app_controller.dart';
+import 'package:flutter_location_tracker/screens/authentication/widgets/login.dart';
+import 'package:flutter_location_tracker/screens/authentication/widgets/bottom_text.dart';
+import 'package:flutter_location_tracker/screens/authentication/widgets/registration.dart';
 import 'package:get/get.dart';
 
 class AuthenticationScreen extends StatelessWidget {
