@@ -72,7 +72,7 @@ class _AddScreenState extends State<AddScreen> {
               },
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: '가격 (선택사항)',
+                hintText: '가격',
               ),
               keyboardType: TextInputType.number,
             ),

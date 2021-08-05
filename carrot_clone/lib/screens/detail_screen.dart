@@ -214,12 +214,12 @@ class _DetailScreenState extends State<DetailScreen>
           onPressed: () {},
           icon: _makeAnimatedIcon(Icons.share_outlined),
         ),
-        _makePopUpMenu(context),
+        _makePopUpMenu(),
       ],
     );
   }
 
-  Widget _makePopUpMenu(BuildContext context) {
+  Widget _makePopUpMenu() {
     return PopupMenuButton(
       icon: _makeAnimatedIcon(Icons.more_vert),
       onSelected: (int value) {
